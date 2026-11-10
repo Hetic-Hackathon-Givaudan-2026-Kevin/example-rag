@@ -1,0 +1,25 @@
+id_question,rubrique,auteur,posees,remplies,score_donnees,score_seniors,score_total,qualite_cachee,texte
+Q13,contraintes,senior_A,18,17,0.9,0.833,0.88,0.9,"Y a-t-il des ingrédients interdits ou des labels à respecter (vegan, naturel, sans allergènes) ?"
+Q04,cible,senior_C,18,17,0.9,0.75,0.855,0.85,"Décrivez-moi la personne qui achètera ce produit : son âge, son quotidien, ce qu'elle achète déjà."
+Q02,type_produit,senior_B,9,8,0.818,0.833,0.823,0.8,"Est-ce une création, une rénovation ou l'extension d'une gamme existante ?"
+Q22,references,senior_D,18,16,0.85,0.75,0.82,0.9,"Quel produit du marché se rapproche le plus de ce que vous imaginez, et que voulez-vous faire de différent ?"
+Q01,type_produit,senior_A,6,5,0.75,0.917,0.8,0.9,"Dans quel produit le parfum sera-t-il utilisé, et sous quelle forme (spray, gel, poudre) ?"
+Q16,budget_volume,senior_B,21,17,0.783,0.833,0.798,0.85,"Quel prix au kilo visez-vous pour le parfum, et quels volumes annuels prévoyez-vous ?"
+Q20,delai,senior_A,14,13,0.875,0.583,0.788,0.8,"Qui doit valider les échantillons chez vous, et combien de tours prévoyez-vous ?"
+Q10,marche,senior_C,14,12,0.812,0.667,0.769,0.85,"Dans quels pays le produit sera-t-il lancé en premier, et lesquels suivront ?"
+Q14,contraintes,senior_D,13,10,0.733,0.75,0.738,0.8,Votre service réglementaire a-t-il une liste de restrictions que je peux recevoir ?
+Q05,cible,senior_A,12,8,0.643,0.833,0.7,0.65,"Votre produit s'adresse-t-il plutôt à un public jeune, familial ou premium ?"
+Q07,univers_olfactif,senior_B,17,11,0.632,0.833,0.692,0.9,Quelle émotion voulez-vous que le consommateur ressente quand il ouvre le produit ?
+Q08,univers_olfactif,senior_D,11,8,0.692,0.667,0.685,0.8,"Y a-t-il un souvenir, un lieu ou une matière qui représente votre marque ?"
+Q17,budget_volume,senior_E,9,6,0.636,0.75,0.67,0.75,À quel prix le produit fini sera-t-il vendu en magasin ?
+Q19,delai,senior_C,11,7,0.615,0.75,0.656,0.85,"À quelle date le produit doit-il être en rayon, et quelles validations faut-il avant ?"
+Q03,type_produit,trame_generique,4,3,0.667,0.5,0.617,0.55,Quel est votre produit ?
+Q11,marche,senior_E,11,6,0.538,0.75,0.602,0.7,"Le produit sera-t-il vendu en grande surface, en pharmacie ou en ligne ?"
+Q15,contraintes,trame_generique,7,5,0.667,0.417,0.592,0.35,Avez-vous des contraintes ?
+Q18,budget_volume,trame_generique,5,4,0.714,0.25,0.575,0.4,Quel est votre budget ?
+Q06,cible,trame_generique,15,8,0.529,0.583,0.546,0.45,Quelle est votre cible ?
+Q21,delai,trame_generique,14,6,0.438,0.583,0.481,0.5,C'est pour quand ?
+Q24,references,trame_generique,14,6,0.438,0.5,0.456,0.45,Avez-vous des références ?
+Q12,marche,trame_generique,15,6,0.412,0.417,0.413,0.5,Où allez-vous vendre ?
+Q09,univers_olfactif,trame_generique,15,3,0.235,0.5,0.315,0.4,"Préférez-vous des notes florales, boisées ou fruitées ?"
+Q23,references,senior_E,5,0,0.143,0.583,0.275,0.7,Quels produits concurrents voulez-vous dépasser ?

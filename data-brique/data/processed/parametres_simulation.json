@@ -1,0 +1,50 @@
+{
+  "graine": 42,
+  "qualite_cachee_par_question": {
+    "Q01": 0.9,
+    "Q02": 0.8,
+    "Q03": 0.55,
+    "Q04": 0.85,
+    "Q05": 0.65,
+    "Q06": 0.45,
+    "Q07": 0.9,
+    "Q08": 0.8,
+    "Q09": 0.4,
+    "Q10": 0.85,
+    "Q11": 0.7,
+    "Q12": 0.5,
+    "Q13": 0.9,
+    "Q14": 0.8,
+    "Q15": 0.35,
+    "Q16": 0.85,
+    "Q17": 0.75,
+    "Q18": 0.4,
+    "Q19": 0.85,
+    "Q20": 0.8,
+    "Q21": 0.5,
+    "Q22": 0.9,
+    "Q23": 0.7,
+    "Q24": 0.45
+  },
+  "probabilite_rubrique_connue_avant": {
+    "type_produit": 0.6,
+    "autres": 0.3
+  },
+  "probabilite_de_poser_une_question": {
+    "junior": 0.75,
+    "senior": 0.9
+  },
+  "choix_bonne_moyenne_generique": {
+    "junior": [
+      0.25,
+      0.25,
+      0.5
+    ],
+    "senior": [
+      0.55,
+      0.35,
+      0.1
+    ]
+  },
+  "avertissement": "Données fictives. La qualité des questions est fixée à la main."
+}

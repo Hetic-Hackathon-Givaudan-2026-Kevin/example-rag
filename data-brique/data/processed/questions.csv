@@ -1,0 +1,25 @@
+id_question,rubrique,texte,pourquoi,moment,auteur,votes_utile,votes_a_reformuler
+Q01,type_produit,"Dans quel produit le parfum sera-t-il utilisé, et sous quelle forme (spray, gel, poudre) ?",La base technique change toute la formule : un parfum pour lessive ne se travaille pas comme un parfum fin.,debut,senior_A,10,0
+Q02,type_produit,"Est-ce une création, une rénovation ou l'extension d'une gamme existante ?",Dit au parfumeur s'il part de zéro ou d'une formule existante.,debut,senior_B,9,1
+Q03,type_produit,Quel est votre produit ?,"Question de la trame générique : trop large, le client répond souvent par le nom commercial.",debut,trame_generique,5,5
+Q04,cible,"Décrivez-moi la personne qui achètera ce produit : son âge, son quotidien, ce qu'elle achète déjà.",Fait passer d'une cible marketing abstraite à un portrait concret que les créatifs peuvent utiliser.,debut,senior_C,8,2
+Q05,cible,"Votre produit s'adresse-t-il plutôt à un public jeune, familial ou premium ?","Donne vite un ordre de grandeur, mais reste une case à cocher.",debut,senior_A,9,1
+Q06,cible,Quelle est votre cible ?,Question de la trame générique : le client répète souvent sa plaquette marketing.,debut,trame_generique,6,4
+Q07,univers_olfactif,Quelle émotion voulez-vous que le consommateur ressente quand il ouvre le produit ?,Fait parler le client en images plutôt qu'en termes techniques qu'il ne maîtrise pas.,milieu,senior_B,9,1
+Q08,univers_olfactif,"Y a-t-il un souvenir, un lieu ou une matière qui représente votre marque ?","Donne au parfumeur une piste créative concrète, même si le client ne connaît pas les familles olfactives.",milieu,senior_D,7,3
+Q09,univers_olfactif,"Préférez-vous des notes florales, boisées ou fruitées ?",Question fermée de la trame générique : le client choisit souvent au hasard.,milieu,trame_generique,5,5
+Q10,marche,"Dans quels pays le produit sera-t-il lancé en premier, et lesquels suivront ?",Les goûts et la réglementation changent d'un pays à l'autre : mieux vaut le savoir avant de créer.,milieu,senior_C,7,3
+Q11,marche,"Le produit sera-t-il vendu en grande surface, en pharmacie ou en ligne ?",Le canal de vente fixe le niveau de prix et l'intensité de parfum attendue.,milieu,senior_E,8,2
+Q12,marche,Où allez-vous vendre ?,Question de la trame générique : la réponse reste souvent vague.,milieu,trame_generique,4,6
+Q13,contraintes,"Y a-t-il des ingrédients interdits ou des labels à respecter (vegan, naturel, sans allergènes) ?",Évite de créer une formule qui sera refusée à la fin par le service réglementaire du client.,milieu,senior_A,9,1
+Q14,contraintes,Votre service réglementaire a-t-il une liste de restrictions que je peux recevoir ?,Récupère les contraintes écrites au lieu de les deviner.,fin,senior_D,8,2
+Q15,contraintes,Avez-vous des contraintes ?,Question de la trame générique : le client répond souvent « non » faute d'y avoir pensé.,milieu,trame_generique,4,6
+Q16,budget_volume,"Quel prix au kilo visez-vous pour le parfum, et quels volumes annuels prévoyez-vous ?","Fixe tout de suite la contrainte de coût, qui limite les matières premières possibles.",fin,senior_B,9,1
+Q17,budget_volume,À quel prix le produit fini sera-t-il vendu en magasin ?,Permet de déduire le budget parfum même quand le client n'ose pas donner un chiffre.,fin,senior_E,8,2
+Q18,budget_volume,Quel est votre budget ?,"Question de la trame générique : directe, elle braque souvent le client.",fin,trame_generique,2,8
+Q19,delai,"À quelle date le produit doit-il être en rayon, et quelles validations faut-il avant ?","En partant de la date de lancement, on retrouve la vraie date limite du brief.",fin,senior_C,8,2
+Q20,delai,"Qui doit valider les échantillons chez vous, et combien de tours prévoyez-vous ?",Révèle les décideurs cachés et évite les allers-retours en fin de projet.,fin,senior_A,6,4
+Q21,delai,C'est pour quand ?,"Question de la trame générique : donne une date, mais pas les étapes de validation.",fin,trame_generique,6,4
+Q22,references,"Quel produit du marché se rapproche le plus de ce que vous imaginez, et que voulez-vous faire de différent ?","Une référence concrète vaut mieux que dix adjectifs, et la différence montre l'ambition du client.",milieu,senior_D,8,2
+Q23,references,Quels produits concurrents voulez-vous dépasser ?,Situe le niveau d'exigence du client face à la concurrence.,milieu,senior_E,6,4
+Q24,references,Avez-vous des références ?,Question de la trame générique : le client n'a souvent rien préparé.,milieu,trame_generique,5,5
