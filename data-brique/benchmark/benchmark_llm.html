@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Benchmark LLM — G03 Data</title><style>
+@page { size: A4 landscape; margin: 12mm 12mm 14mm 12mm; }
+body { font-family: "Segoe UI", Calibri, Arial, sans-serif; font-size: 10.5pt; line-height: 1.45;
+       color: #1f2328; max-width: 100%; margin: 0; }
+h1 { font-size: 19pt; border-bottom: 2px solid #1f2328; padding-bottom: 4px; margin-top: 0; }
+h2 { font-size: 14pt; margin-top: 18px; border-bottom: 1px solid #d0d7de; padding-bottom: 2px;
+     break-after: avoid; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0 10px; font-size: 9pt; break-inside: avoid; }
+th, td { border: 1px solid #8c959f; padding: 4px 6px; text-align: left; vertical-align: top; }
+th { background: #eef1f4; font-weight: 600; }
+tr:nth-child(even) td { background: #f8f9fa; }
+code { font-family: Consolas, "Courier New", monospace; font-size: 9pt; background: #f2f4f6;
+       padding: 0 3px; border-radius: 3px; }
+pre { background: #f2f4f6; border: 1px solid #d0d7de; padding: 8px; font-size: 8.5pt;
+      white-space: pre-wrap; break-inside: avoid; }
+pre code { background: none; padding: 0; }
+em { color: #57606a; }
+li { margin: 2px 0; }
+a { color: #0b5cad; text-decoration: none; }
+</style></head>
+<body>
+<h1>Benchmark des modèles locaux (Ollama, CPU) — étape 3</h1>
+<p><em>Piste : « 3 questions qui débloquent les briefs ». Mis à jour le 10/11/2026.</em>
+<em>Chiffres bruts : <code>benchmark/runs/&lt;pc&gt;.json</code> ; tableaux complets régénérés par <code>python benchmark/run_benchmark.py --rapport</code> → <a href="tableaux.md">tableaux.md</a>.</em></p>
+<h2>1. Ce qu'on mesure, et pourquoi</h2>
+<table>
+<thead>
+<tr>
+<th>Tâche</th>
+<th>Usage dans le produit</th>
+<th>Cas de test</th>
+<th>Mesures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recherche</strong> : besoin du commercial en langage courant → bonne question de la banque (24 questions)</td>
+<td>Le junior tape « je ne sais pas quand ils lancent » et retrouve la question qui marche</td>
+<td>15 besoins, avec la rubrique et la ou les questions attendues</td>
+<td>Bonne rubrique au rang 1, bonne question au <strong>rang 1</strong>, dans le <strong>top 3</strong> (les 3 questions montrées au junior), dans le top 5, MRR, temps par requête</td>
+</tr>
+<tr>
+<td><strong>Extraction</strong> (LLM) : note du rendez-vous précédent → rubriques du brief déjà connues, en JSON</td>
+<td>Savoir quelles rubriques sont encore vides, pour choisir les 3 questions (entrée <code>rubriques_connues</code> de <code>POST /questions</code>)</td>
+<td>15 notes, avec les rubriques attendues</td>
+<td>JSON valide, précision, rappel, F1, notes avec rubrique inventée, notes avec valeur inventée, temps par note</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Méthode :</strong></p>
+<ul>
+<li>Les 15 cas (<a href="briefs_test.csv">briefs_test.csv</a>) ont été écrits <strong>avant</strong> le premier prompt et n'ont pas été modifiés ensuite.</li>
+<li>Les besoins sont volontairement formulés avec d'autres mots que les questions de la banque, pour tester la compréhension du sens.</li>
+<li>Réglages : Ollama sur <code>127.0.0.1</code>, <code>temperature 0</code>, graine 42, vecteurs de la banque en cache.</li>
+<li>Le TF-IDF sert de référence sans IA.</li>
+</ul>
+<h2>2. Contrainte matérielle : mon PC</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>PC principal (le mien)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Processeur</td>
+<td>AMD Ryzen 5 PRO 4650U (6 cœurs / 12 threads), carte graphique intégrée → <strong>CPU uniquement</strong></td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>15,3 Go au total, mais <strong>0,6 à 1,8 Go libres</strong> pendant les tests (navigateur, VS Code, API ouverts)</td>
+</tr>
+<tr>
+<td>Disque C: (où Ollama range les modèles)</td>
+<td><strong>0,3 Go libres sur 237 Go</strong></td>
+</tr>
+<tr>
+<td>Disque D:</td>
+<td>116 Go libres (pas encore utilisé par Ollama)</td>
+</tr>
+<tr>
+<td>Système</td>
+<td>Windows 11 Pro, Ollama 0.40.16, Python 3.11.9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conséquences :</strong></p>
+<ul>
+<li><strong>Disque :</strong> <code>bge-m3</code> (~1,2 Go), <code>mxbai-embed-large</code> (~670 Mo), <code>qwen2.5:3b</code> (~1,9 Go) et <code>llama3.2:3b</code> (~2 Go) n'ont pas pu être téléchargés. Même <code>qwen2.5:0.5b</code> (~400 Mo) ne tient pas dans les 0,3 Go restants.</li>
+<li><strong>RAM :</strong> avec moins de 2 Go libres, Windows déplace une partie de la mémoire sur le disque. Ça ralentit le LLM et rend les temps variables : entre deux relances identiques, le temps moyen par note est passé de 9,2 s à 11,4 s.</li>
+<li><strong>Pour aller plus loin :</strong> les gros modèles sont testés par mes coéquipiers sur leur PC, avec le même script (colonnes « coéquipier » plus bas).</li>
+</ul>
+<h2>3. Résultats — recherche de la bonne question (15 cas)</h2>
+<table>
+<thead>
+<tr>
+<th>Modèle</th>
+<th>Taille</th>
+<th>Bonne rubrique au rang 1</th>
+<th>Bonne question au rang 1</th>
+<th>Bonne question dans le top 3</th>
+<th>Bonne question dans le top 5</th>
+<th>MRR</th>
+<th>Temps / requête</th>
+<th>Indexation de la banque</th>
+<th>Testé sur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TF-IDF (référence, sans IA)</td>
+<td>0</td>
+<td>40 %</td>
+<td>33 % (5/15)</td>
+<td>47 % (7/15)</td>
+<td>53 %</td>
+<td>0,44</td>
+<td><strong>0,1 ms</strong></td>
+<td>instantané</td>
+<td>mon PC</td>
+</tr>
+<tr>
+<td><strong>nomic-embed-text</strong></td>
+<td>274 Mo</td>
+<td><strong>53 %</strong></td>
+<td><strong>47 % (7/15)</strong></td>
+<td><strong>60 % (9/15)</strong></td>
+<td><strong>73 %</strong></td>
+<td><strong>0,56</strong></td>
+<td>70–120 ms</td>
+<td>2,4 s (une seule fois, puis cache)</td>
+<td>mon PC</td>
+</tr>
+<tr>
+<td>all-minilm</td>
+<td>~46 Mo</td>
+<td><em>en attente</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>mon PC, après libération du disque</td>
+</tr>
+<tr>
+<td>bge-m3</td>
+<td>~1,2 Go</td>
+<td><em>à remplir</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>PC d'un coéquipier</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Lecture : sur 15 besoins, nomic-embed-text met la bonne question dans les 3 proposées 9 fois, contre 7 pour le TF-IDF.</p>
+<h2>4. Résultats — extraction JSON des rubriques connues (15 notes)</h2>
+<p>« Garde-fou » : une règle simple, sans IA, ajoutée <strong>après</strong> le premier passage. Une rubrique ne compte que si sa valeur est non vide et si ses mots se retrouvent dans la note. Comme elle a été décidée en voyant ces résultats, elle <strong>devra être confirmée sur les 30 cas de validation</strong> de l'étape 4.</p>
+<table>
+<thead>
+<tr>
+<th>Modèle</th>
+<th>Taille</th>
+<th>JSON valide</th>
+<th>Précision</th>
+<th>Rappel</th>
+<th>F1</th>
+<th>F1 avec garde-fou</th>
+<th>Notes avec rubrique inventée (brut → garde-fou)</th>
+<th>Notes avec valeur inventée</th>
+<th>Temps / note (moy. / max)</th>
+<th>Chargement</th>
+<th>Testé sur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>qwen2.5:1.5b</strong></td>
+<td>986 Mo</td>
+<td><strong>100 %</strong></td>
+<td>0,44</td>
+<td>0,92</td>
+<td>0,59</td>
+<td><strong>0,72</strong></td>
+<td>100 % → 87 %</td>
+<td>60 %</td>
+<td>11,4 s / 17,9 s</td>
+<td>11 s</td>
+<td>mon PC</td>
+</tr>
+<tr>
+<td>qwen2.5:0.5b</td>
+<td>~400 Mo</td>
+<td><em>en attente</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>mon PC, après libération du disque</td>
+</tr>
+<tr>
+<td>qwen2.5:3b</td>
+<td>~1,9 Go</td>
+<td><em>à remplir</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>PC d'un coéquipier</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>5. Trois exemples concrets</h2>
+<p><strong>Exemple 1 : les embeddings comprennent le sens, le TF-IDF compare les mots (cas T14).</strong></p>
+<ul>
+<li>Besoin : « Quel public vise-t-on : les jeunes, les familles ou le haut de gamme ? »</li>
+<li>TF-IDF : il propose en n°1 Q02 (« création, rénovation ou extension de gamme ? »), une question hors sujet.</li>
+<li>nomic-embed-text : il propose en n°1 Q05 (« plutôt un public jeune, familial ou premium ? »), la bonne réponse. Le cas est réussi alors que « haut de gamme » et « premium » ne partagent aucun mot.</li>
+</ul>
+<p><strong>Exemple 2 : un piège de vocabulaire fait échouer les deux méthodes (cas T09).</strong></p>
+<ul>
+<li>Besoin : « Quand est-ce que ça doit arriver dans les magasins ? »</li>
+<li>La bonne réponse est Q19 (« à quelle date le produit doit-il être en rayon ? »).</li>
+<li>nomic-embed-text : il propose Q17 (« à quel prix le produit fini sera-t-il vendu <strong>en magasin</strong> ? ») et ne place Q19 qu'au rang 15. Le mot « magasin » l'a attiré vers la mauvaise question.</li>
+<li>TF-IDF : il trouve la bonne rubrique, mais propose d'abord la question générique Q21 ; Q19 n'arrive qu'au rang 3.</li>
+<li>Leçon : il faudra tester une recherche <strong>hybride</strong> (TF-IDF + embeddings), et accepter que la recherche libre reste une aide, pas une vérité.</li>
+</ul>
+<p><strong>Exemple 3 : le petit LLM invente des rubriques (cas T03).</strong></p>
+<ul>
+<li>Note : « Lancement prévu en septembre 2027 avec trois tours de validation. Ils n'ont pas encore d'idée précise sur le produit. » La seule rubrique attendue est <code>delai</code>.</li>
+<li>qwen2.5:1.5b coche les <strong>7 rubriques</strong>. Il invente par exemple <code>"cible": "femme"</code> et <code>"marche": "Europe"</code>, et prend le nom du client (« Ondevia ») pour une référence concurrente.</li>
+<li>Avec le garde-fou, il ne reste que <code>delai</code> et <code>references</code>. « Ondevia » est bien écrit dans la note, donc la règle ne peut pas détecter cette erreur de sens.</li>
+</ul>
+<h2>6. Recommandation pour la V2</h2>
+<ol>
+<li><strong>Recherche : nomic-embed-text, avec le TF-IDF en repli.</strong> Il fait mieux sur toutes les mesures (+13 points au rang 1 et au top 3, +20 points au top 5) et reste rapide sur CPU (moins de 0,1 s par requête). Si Ollama ne répond pas, la V2 retombe automatiquement sur le TF-IDF. Une version hybride sera testée sur les 30 cas de validation.</li>
+<li><strong>Extraction : pas d'extraction automatique avec qwen2.5:1.5b.</strong> Même avec le garde-fou, il invente une rubrique dans 87 % des notes, et il faut plus de 11 s par note sur mon PC. Dans la V2, son résultat sert seulement de <strong>pré-remplissage</strong> : le junior confirme les rubriques connues en un clic, ce qui va dans le sens du produit (validation en un clic). Le garde-fou est appliqué systématiquement.</li>
+<li><strong>Décision à prendre avec les résultats des coéquipiers :</strong><ul>
+<li>Si <code>qwen2.5:3b</code> atteint un F1 d'au moins 0,85 avec le garde-fou, en moins de 20 s par note, on le retient, sur une machine qui a la RAM nécessaire.</li>
+<li>Si <code>bge-m3</code> dépasse nomic d'au moins 10 points sur le top 3, on le retient.</li>
+<li>Sinon, on garde les modèles légers.</li>
+</ul>
+</li>
+</ol>
+<h2>7. Limites (à dire au jury)</h2>
+<ul>
+<li><strong>15 cas seulement</strong> : un cas représente 6,7 points de pourcentage, donc les écarts de moins de 15 points ne sont pas significatifs.</li>
+<li><strong>Même auteur pour la banque et les cas de test</strong> (données fictives) : risque de biais de formulation.</li>
+<li><strong>Le garde-fou a été conçu après avoir vu les résultats</strong> → il faut le confirmer sur les 30 cas de validation, sans retoucher le prompt.</li>
+<li><strong>Temps mesurés sous forte contrainte de RAM</strong>, sur un seul PC et un seul passage → ce sont des ordres de grandeur.</li>
+<li><strong>Couverture incomplète :</strong> <code>all-minilm</code> et <code>qwen2.5:0.5b</code> ne sont pas encore testés (disque plein). <code>mxbai-embed-large</code> et <code>llama3.2:3b</code> sont abandonnés faute de place.</li>
+<li>Le TF-IDF et les embeddings ne voient que le texte des questions : la recherche ne tient pas encore compte du score de réussite des questions.</li>
+</ul>
+<h2>8. Reproduire</h2>
+<pre><code class="language-bash">cd data-brique
+ollama pull nomic-embed-text &amp;&amp; ollama pull qwen2.5:1.5b      # + all-minilm, qwen2.5:0.5b si la place le permet
+python benchmark/run_benchmark.py --pc pc_principal
+
+# Sur le PC d'un coéquipier (étiquette sans nom de personne) :
+ollama pull bge-m3 &amp;&amp; ollama pull qwen2.5:3b
+python benchmark/run_benchmark.py --pc pc2 --embed bge-m3 --llm qwen2.5:3b
+# puis commiter benchmark/runs/pc2.json et régénérer les tableaux :
+python benchmark/run_benchmark.py --rapport
+</code></pre>
+</body></html>
