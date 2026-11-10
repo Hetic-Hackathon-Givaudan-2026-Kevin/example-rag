@@ -1,0 +1,578 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Data G03 - Copilote de briefing",
+    "description": "Propose au commercial junior les 3 questions qui comblent le mieux les trous de son brief, avec le pourquoi de chaque question, et enregistre les votes des seniors. Données fictives pour le hackathon : aucune donnée Givaudan réelle.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/sante": {
+      "get": {
+        "tags": [
+          "Technique"
+        ],
+        "summary": "Vérifier que l'API répond",
+        "operationId": "sante_sante_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Sante Sante Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/questions": {
+      "post": {
+        "tags": [
+          "Recommandation"
+        ],
+        "summary": "Proposer les questions à poser avant un rendez-vous",
+        "operationId": "proposer_questions_questions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemandeQuestions"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseQuestions"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback": {
+      "post": {
+        "tags": [
+          "Seniors"
+        ],
+        "summary": "Enregistrer le vote d'un senior sur une question",
+        "operationId": "voter_feedback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemandeVote"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseVote"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banque": {
+      "get": {
+        "tags": [
+          "Seniors"
+        ],
+        "summary": "Lister la banque de questions avec leurs scores",
+        "operationId": "banque_banque_get",
+        "parameters": [
+          {
+            "name": "rubrique",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Rubrique"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rubrique"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionBanque"
+                  },
+                  "title": "Response Banque Banque Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "properties": {
+          "id_client": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id Client",
+            "examples": [
+              "C07"
+            ]
+          },
+          "nom": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nom",
+            "examples": [
+              "Maison Lunelle (fictif)"
+            ]
+          },
+          "secteur": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Secteur"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "taille": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Taille"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pays_principal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pays Principal",
+            "examples": [
+              "France"
+            ]
+          }
+        },
+        "type": "object",
+        "title": "Client"
+      },
+      "DemandeQuestions": {
+        "properties": {
+          "client": {
+            "$ref": "#/components/schemas/Client"
+          },
+          "rubriques_connues": {
+            "items": {
+              "$ref": "#/components/schemas/Rubrique"
+            },
+            "type": "array",
+            "title": "Rubriques Connues",
+            "description": "Rubriques du brief déjà connues avant le rendez-vous.",
+            "examples": [
+              [
+                "type_produit",
+                "cible"
+              ]
+            ]
+          },
+          "nb_questions": {
+            "type": "integer",
+            "maximum": 8.0,
+            "minimum": 1.0,
+            "title": "Nb Questions",
+            "default": 3
+          }
+        },
+        "type": "object",
+        "title": "DemandeQuestions"
+      },
+      "DemandeVote": {
+        "properties": {
+          "id_question": {
+            "type": "string",
+            "title": "Id Question",
+            "examples": [
+              "Q07"
+            ]
+          },
+          "id_senior": {
+            "type": "string",
+            "title": "Id Senior",
+            "examples": [
+              "senior_B"
+            ]
+          },
+          "vote": {
+            "$ref": "#/components/schemas/Vote"
+          },
+          "commentaire": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commentaire"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_question",
+          "id_senior",
+          "vote"
+        ],
+        "title": "DemandeVote"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "QuestionBanque": {
+        "properties": {
+          "id_question": {
+            "type": "string",
+            "title": "Id Question"
+          },
+          "texte": {
+            "type": "string",
+            "title": "Texte"
+          },
+          "rubrique": {
+            "$ref": "#/components/schemas/Rubrique"
+          },
+          "pourquoi": {
+            "type": "string",
+            "title": "Pourquoi"
+          },
+          "auteur": {
+            "type": "string",
+            "title": "Auteur"
+          },
+          "posees": {
+            "type": "integer",
+            "title": "Posees"
+          },
+          "remplies": {
+            "type": "integer",
+            "title": "Remplies"
+          },
+          "score_donnees": {
+            "type": "number",
+            "title": "Score Donnees"
+          },
+          "score_seniors": {
+            "type": "number",
+            "title": "Score Seniors"
+          },
+          "score_total": {
+            "type": "number",
+            "title": "Score Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_question",
+          "texte",
+          "rubrique",
+          "pourquoi",
+          "auteur",
+          "posees",
+          "remplies",
+          "score_donnees",
+          "score_seniors",
+          "score_total"
+        ],
+        "title": "QuestionBanque"
+      },
+      "QuestionProposee": {
+        "properties": {
+          "id_question": {
+            "type": "string",
+            "title": "Id Question"
+          },
+          "texte": {
+            "type": "string",
+            "title": "Texte"
+          },
+          "rubrique": {
+            "$ref": "#/components/schemas/Rubrique"
+          },
+          "rubrique_libelle": {
+            "type": "string",
+            "title": "Rubrique Libelle"
+          },
+          "pourquoi": {
+            "type": "string",
+            "title": "Pourquoi"
+          },
+          "moment": {
+            "type": "string",
+            "title": "Moment",
+            "description": "debut, milieu ou fin du rendez-vous"
+          },
+          "auteur": {
+            "type": "string",
+            "title": "Auteur",
+            "description": "Senior qui a proposé la question, ou trame_generique"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score",
+            "description": "Score total entre 0 et 1"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_question",
+          "texte",
+          "rubrique",
+          "rubrique_libelle",
+          "pourquoi",
+          "moment",
+          "auteur",
+          "score"
+        ],
+        "title": "QuestionProposee"
+      },
+      "ReponseQuestions": {
+        "properties": {
+          "client": {
+            "$ref": "#/components/schemas/Client"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/QuestionProposee"
+            },
+            "type": "array",
+            "title": "Questions"
+          },
+          "rubriques_manquantes": {
+            "items": {
+              "$ref": "#/components/schemas/Rubrique"
+            },
+            "type": "array",
+            "title": "Rubriques Manquantes",
+            "description": "Rubriques encore vides, les plus prioritaires d'abord"
+          },
+          "methode": {
+            "type": "string",
+            "title": "Methode"
+          }
+        },
+        "type": "object",
+        "required": [
+          "client",
+          "questions",
+          "rubriques_manquantes",
+          "methode"
+        ],
+        "title": "ReponseQuestions"
+      },
+      "ReponseVote": {
+        "properties": {
+          "id_question": {
+            "type": "string",
+            "title": "Id Question"
+          },
+          "votes_utile": {
+            "type": "integer",
+            "title": "Votes Utile"
+          },
+          "votes_a_reformuler": {
+            "type": "integer",
+            "title": "Votes A Reformuler"
+          },
+          "score_seniors": {
+            "type": "number",
+            "title": "Score Seniors"
+          },
+          "score_total": {
+            "type": "number",
+            "title": "Score Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_question",
+          "votes_utile",
+          "votes_a_reformuler",
+          "score_seniors",
+          "score_total"
+        ],
+        "title": "ReponseVote"
+      },
+      "Rubrique": {
+        "type": "string",
+        "enum": [
+          "type_produit",
+          "cible",
+          "univers_olfactif",
+          "marche",
+          "contraintes",
+          "budget_volume",
+          "delai",
+          "references"
+        ],
+        "title": "Rubrique"
+      },
+      "Secteur": {
+        "type": "string",
+        "enum": [
+          "parfum_fin",
+          "soin_corps",
+          "capillaire",
+          "hygiene",
+          "entretien_maison"
+        ],
+        "title": "Secteur"
+      },
+      "Taille": {
+        "type": "string",
+        "enum": [
+          "multinationale",
+          "regionale",
+          "locale"
+        ],
+        "title": "Taille"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Vote": {
+        "type": "string",
+        "enum": [
+          "utile",
+          "a_reformuler"
+        ],
+        "title": "Vote"
+      }
+    }
+  }
+}

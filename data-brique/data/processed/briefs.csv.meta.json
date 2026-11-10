@@ -1,0 +1,15 @@
+{
+  "fichier": "briefs.csv",
+  "date_extraction": "2026-11-10T14:49:55+00:00",
+  "source": "Données synthétiques G03 (scripts/generer_donnees.py)",
+  "description": "Brief obtenu après chaque rendez-vous simulé",
+  "url": null,
+  "licence": "Données fictives produites par l équipe, aucune donnée Givaudan ni personnelle",
+  "graine": 42,
+  "parametres": "data/processed/parametres_simulation.json",
+  "filtres": null,
+  "volume": {
+    "lignes": 90,
+    "colonnes": 12
+  }
+}

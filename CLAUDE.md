@@ -49,7 +49,7 @@ data-brique/
 
 ## État d'avancement
 - [x] Étape 1 : inventaire, échantillon v0, rapport qualité (validé le 10/11)
-- [ ] Étape 2 (express Gate 1 : intégrer g03-data → data/processed, src/moteur_v1.py, API ; CRM 1 000 interactions reporté)
+- [~] Étape 2 : express Gate 1 fait le 10/11 (g03-data.zip intégré : data/processed, src/moteur_v1.py, api/main.py, scripts/premier_resultat.py → docs/premier_resultat.md). Reste : tests pytest, contrat_api.md, notebook, sample_v1 + comparaison v0/v1, mention licences, CRM 1 000 interactions.
 - [ ] Étape 3
 - [ ] Étape 4
 - [ ] Étape 5

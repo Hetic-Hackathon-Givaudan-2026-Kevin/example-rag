@@ -1,0 +1,31 @@
+id_client,nom,secteur,taille,pays_principal
+C01,Calyra,hygiene,regionale,Canada
+C02,Brumelle,capillaire,multinationale,Canada
+C03,Ondevia,soin_corps,multinationale,Maroc
+C04,Savonnerie Ardel,capillaire,regionale,Belgique
+C05,Pétrelia,parfum_fin,regionale,Belgique
+C06,Lumiokid,parfum_fin,regionale,Espagne
+C07,Ysalis,soin_corps,locale,Belgique
+C08,Vétivora,soin_corps,regionale,Maroc
+C09,Clairhyg,hygiene,locale,Espagne
+C10,Néroline,entretien_maison,locale,France
+C11,Boréalys,entretien_maison,multinationale,Belgique
+C12,Sablenoir,soin_corps,multinationale,Belgique
+C13,Mistraline,entretien_maison,multinationale,Espagne
+C14,Verdeau,entretien_maison,multinationale,Canada
+C15,Aubeline,soin_corps,regionale,Espagne
+C16,Corolys,entretien_maison,regionale,France
+C17,Fennelia,parfum_fin,regionale,Espagne
+C18,Glaciane,parfum_fin,multinationale,Maroc
+C19,Hibiscane,capillaire,multinationale,Italie
+C20,Iridelle,entretien_maison,locale,France
+C21,Jasmora,parfum_fin,multinationale,Maroc
+C22,Kalyane,entretien_maison,multinationale,Canada
+C23,Lavandys,entretien_maison,regionale,Royaume-Uni
+C24,Myrtelle,soin_corps,multinationale,Canada
+C25,Nacrine,parfum_fin,locale,Allemagne
+C26,Opaline Home,soin_corps,regionale,Canada
+C27,Pivoinea,entretien_maison,locale,Royaume-Uni
+C28,Quartzia,entretien_maison,locale,Allemagne
+C29,Rosalie Care,soin_corps,locale,Maroc
+C30,Santalys,hygiene,multinationale,Canada
