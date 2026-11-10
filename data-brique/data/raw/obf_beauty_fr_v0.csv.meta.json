@@ -1,0 +1,36 @@
+{
+  "fichier": "obf_beauty_fr_v0.csv",
+  "date_extraction": "2026-11-10T14:26:23+00:00",
+  "source": "Open Beauty Facts — export Parquet officiel (beauty.parquet)",
+  "url": "https://huggingface.co/datasets/openfoodfacts/product-database/blob/12a54ce27f7166bad0d8947e2ebeb258cec157c1/beauty.parquet",
+  "revision": "12a54ce27f7166bad0d8947e2ebeb258cec157c1",
+  "licence": "ODbL 1.0 (base) / DbCL 1.0 (contenus) — Open Food Facts",
+  "filtres": {
+    "pays": "countries_tags contient en:france",
+    "colonnes": [
+      "code",
+      "product_name",
+      "brands",
+      "brands_tags",
+      "categories_tags",
+      "labels_tags",
+      "countries_tags",
+      "lang",
+      "ingredients_tags",
+      "ingredients_n",
+      "created_t",
+      "last_modified_t",
+      "completeness",
+      "owner"
+    ]
+  },
+  "rgpd": [
+    "colonnes contributeurs non lues",
+    "owner réduit à un booléen fiche_producteur"
+  ],
+  "volume": {
+    "lignes_source": 80202,
+    "lignes": 21333,
+    "colonnes": 17
+  }
+}

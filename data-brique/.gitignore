@@ -1,0 +1,12 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Gros fichiers téléchargés (régénérés par les scripts)
+data/raw/_cache/
+
+# Secrets : jamais dans le dépôt
+.env
