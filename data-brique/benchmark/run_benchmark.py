@@ -50,12 +50,17 @@ OLLAMA = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434").replace("localh
 CACHE = ICI / "cache"
 RUNS = ICI / "runs"
 SEED = 42
-EMBED_DEFAUT = ["nomic-embed-text", "all-minilm"]
-LLM_DEFAUT = ["qwen2.5:1.5b", "qwen2.5:0.5b"]
-MODELES_COEQUIPIERS = {"embed": ["bge-m3"], "llm": ["qwen2.5:3b"]}
+# Plafond de tokens par réponse : évite qu'un petit modèle boucle sans fin (vu avec qwen2.5:0.5b en mode JSON).
+# Une réponse coupée n'est pas un JSON valide -> comptée comme échec.
+MAX_TOKENS = 400
+EMBED_DEFAUT = ["nomic-embed-text", "all-minilm", "bge-m3"]
+LLM_DEFAUT = ["qwen2.5:0.5b", "qwen2.5:1.5b", "qwen2.5:3b"]
+# Modèles prévus mais pas encore testés : à mesurer sur le PC d'un coéquipier.
+MODELES_COEQUIPIERS = {"embed": ["mxbai-embed-large"], "llm": ["llama3.2:3b"]}
 
 # Préfixes demandés par certains modèles d'embeddings (documentation des modèles).
-PREFIXES = {"nomic-embed-text": ("search_query: ", "search_document: ")}
+PREFIXES = {"nomic-embed-text": ("search_query: ", "search_document: "),
+            "mxbai-embed-large": ("Represent this sentence for searching relevant passages: ", "")}
 
 STOPWORDS = set("""a au aux avec ce ces c cela d dans de des du elle en est et eux il ils je j l la le les leur leurs
 lui ma mais me meme mes moi mon ne nos notre nous on ou par pas pour qu que qui sa se ses son sur ta te tes toi ton
@@ -207,12 +212,12 @@ def appeler_llm(modele: str, note: str) -> tuple[str, float, dict]:
     rubriques = "\n".join(f"- {k} : {v}" for k, v in RUBRIQUES.items())
     corps = {
         "model": modele, "stream": False, "format": "json",
-        "options": {"temperature": 0, "seed": SEED, "num_ctx": 2048},
+        "options": {"temperature": 0, "seed": SEED, "num_ctx": 2048, "num_predict": MAX_TOKENS},
         "messages": [{"role": "system", "content": PROMPT_EXTRACTION.format(rubriques=rubriques)},
                      {"role": "user", "content": f"Note du rendez-vous :\n{note}"}],
     }
     t0 = time.perf_counter()
-    r = requests.post(f"{OLLAMA}/api/chat", json=corps, timeout=600)
+    r = requests.post(f"{OLLAMA}/api/chat", json=corps, timeout=300)
     duree = time.perf_counter() - t0
     r.raise_for_status()
     j = r.json()
@@ -258,7 +263,10 @@ def evaluer_extraction(modele: str, cas: pd.DataFrame) -> dict:
     lignes = []
     for _, c in cas.iterrows():
         attendu = set(filter(None, str(c["rubriques_remplies_attendues"] or "").split(";"))) - {"nan"}
-        brut, duree, meta = appeler_llm(modele, c["note_rdv"])
+        try:
+            brut, duree, meta = appeler_llm(modele, c["note_rdv"])
+        except requests.RequestException as e:  # délai dépassé, etc. -> échec de ce cas, on continue
+            brut, duree, meta = f"ERREUR: {type(e).__name__}", 300.0, {}
         try:
             j = json.loads(brut)
             predit_brut = j.get("rubriques_remplies", [])
@@ -311,29 +319,51 @@ def rapport() -> None:
     L = ["# Tableaux du benchmark (générés par `run_benchmark.py --rapport`)\n"]
     L.append("## Configuration des PC\n")
     L.append(pd.DataFrame({pc: r["config"] for pc, r in runs.items()}).to_markdown() + "\n")
+    pct = lambda x: f"{100 * x:.0f} %" if isinstance(x, (int, float)) else x  # noqa: E731
     rech, ext = [], []
     for pc, r in runs.items():
         for res in r["resultats"].values():
-            ligne = {"pc": pc, **{k: v for k, v in res.items() if k not in ("details", "type")}}
-            (rech if res["type"] == "recherche" else ext).append(ligne)
-        for m in r.get("non_installes", []):
-            pass
-    vus = {x["modele"] for x in rech + ext}
+            if res["type"] == "recherche":
+                rech.append({"modèle": res["modele"], "testé sur": pc,
+                             "rubrique rang 1": pct(res["rubrique_rang1"]),
+                             "question rang 1": pct(res["question_rang1"]),
+                             "question top 3": pct(res.get("question_top3", "")),
+                             "question top 5": pct(res["question_top5"]), "MRR": res["mrr"],
+                             "temps / requête (ms)": res["temps_moyen_ms"],
+                             "indexation banque (s)": res.get("indexation_banque_s", "")})
+            else:
+                ext.append({"modèle": res["modele"], "testé sur": pc,
+                            "JSON valide": pct(res["json_valide"]), "F1 brut": res["f1"],
+                            "F1 garde-fou": res.get("f1_garde_fou", ""),
+                            "notes exactes (garde-fou)": pct(res.get("cas_exacts_garde_fou", "")),
+                            "notes avec rubrique inventée (brut)": pct(res["notes_avec_rubrique_inventee"]),
+                            "notes avec rubrique inventée (garde-fou)":
+                                pct(res.get("notes_avec_rubrique_inventee_garde_fou", "")),
+                            "temps / note moy. (s)": res["temps_moyen_s"],
+                            "temps / note max (s)": res["temps_max_s"]})
+    # Lignes « à remplir » uniquement pour les modèles que personne n'a encore testés.
+    vus = {x["modèle"] for x in rech + ext}
     for m in MODELES_COEQUIPIERS["embed"]:
         if m not in vus:
-            rech.append({"pc": "coéquipier", "modele": m, "rubrique_rang1": "à remplir"})
+            rech.append({"modèle": m, "testé sur": "à remplir (PC coéquipier)"})
     for m in MODELES_COEQUIPIERS["llm"]:
         if m not in vus:
-            ext.append({"pc": "coéquipier", "modele": m, "json_valide": "à remplir"})
+            ext.append({"modèle": m, "testé sur": "à remplir (PC coéquipier)"})
     L.append("## Recherche de la bonne question (15 cas)\n")
     L.append(pd.DataFrame(rech).fillna("").to_markdown(index=False) + "\n")
     L.append("## Extraction JSON des rubriques connues (15 notes)\n")
     L.append(pd.DataFrame(ext).fillna("").to_markdown(index=False) + "\n")
+    L.append("Détail cas par cas (sorties brutes des modèles) : `benchmark/runs/<pc>.json`.\n")
     (ICI / "tableaux.md").write_text("\n".join(L), encoding="utf-8")
     print(f"-> {ICI / 'tableaux.md'}")
 
 
 # ---------------------------------------------------------------- main
+def sauver(fichier: Path, run: dict) -> None:
+    """Sauvegarde après chaque modèle : un plantage ne fait pas perdre les résultats déjà obtenus."""
+    fichier.write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--pc", default="pc_principal", help="étiquette du PC (sans nom de personne)")
@@ -371,6 +401,7 @@ def main() -> None:
         ancien = run["resultats"].get(m, {}).get("indexation_banque_s")
         res["indexation_banque_s"] = round(duree_index, 2) if duree_index or ancien is None else ancien
         run["resultats"][m] = res
+        sauver(fichier, run)
         print(m, {k: v for k, v in res.items() if k != "details"})
 
     for m in a.llm:
@@ -380,9 +411,10 @@ def main() -> None:
             continue
         res = evaluer_extraction(m, cas)
         run["resultats"][m] = res
+        sauver(fichier, run)
         print(m, {k: v for k, v in res.items() if k != "details"})
 
-    fichier.write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    sauver(fichier, run)
     print(f"-> {fichier}")
     rapport()
 

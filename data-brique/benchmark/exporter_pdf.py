@@ -29,9 +29,14 @@ CSS = """
 body { font-family: "Segoe UI", Calibri, Arial, sans-serif; font-size: 10.5pt; line-height: 1.45;
        color: #1f2328; max-width: 100%; margin: 0; }
 h1 { font-size: 19pt; border-bottom: 2px solid #1f2328; padding-bottom: 4px; margin-top: 0; }
-h2 { font-size: 14pt; margin-top: 18px; border-bottom: 1px solid #d0d7de; padding-bottom: 2px;
-     break-after: avoid; }
-table { border-collapse: collapse; width: 100%; margin: 8px 0 10px; font-size: 9pt; break-inside: avoid; }
+h2 { font-size: 14pt; margin-top: 18px; border-bottom: 1px solid #d0d7de; padding-bottom: 2px; }
+/* Mise en page : un titre ne reste jamais seul en bas de page, un tableau n'est jamais coupé,
+   et le bloc « titre + texte d'intro + tableau » d'une section reste sur une même page. */
+h2, h3 { break-after: avoid; }
+table { break-inside: avoid; }
+tr { break-inside: avoid; }
+.bloc { break-inside: avoid; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0 10px; font-size: 9pt; }
 th, td { border: 1px solid #8c959f; padding: 4px 6px; text-align: left; vertical-align: top; }
 th { background: #eef1f4; font-weight: 600; }
 tr:nth-child(even) td { background: #f8f9fa; }
@@ -41,6 +46,8 @@ pre { background: #f2f4f6; border: 1px solid #d0d7de; padding: 8px; font-size: 8
       white-space: pre-wrap; break-inside: avoid; }
 pre code { background: none; padding: 0; }
 em { color: #57606a; }
+blockquote { border-left: 4px solid #bf8700; background: #fff8e5; margin: 8px 0; padding: 6px 12px; }
+blockquote p { margin: 0; }
 li { margin: 2px 0; }
 a { color: #0b5cad; text-decoration: none; }
 """
@@ -79,9 +86,32 @@ def preparer_markdown(texte: str) -> str:
     return "\n".join(sortie)
 
 
+SECTION = re.compile(r"(<h2[^>]*>.*?</h2>)(.*?)(?=<h2|\Z)", re.S)
+PREMIER_ELEMENT = re.compile(r"\s*<(p|ul|ol|pre|blockquote)\b.*?</\1>", re.S)
+
+
+def grouper_sections(html: str) -> str:
+    """Regroupe chaque section dans un bloc insécable (classe CSS `bloc`) :
+    - section avec tableau : titre + texte d'intro + premier tableau ;
+    - section sans tableau : titre + premier paragraphe ou liste.
+    La suite de la section (lecture, listes) reste libre de passer à la page suivante :
+    regrouper toute la section laisserait de grands blancs quand elle dépasse une page."""
+    def envelopper(m: re.Match) -> str:
+        titre, corps = m.group(1), m.group(2)
+        fin_tableau = corps.find("</table>")
+        if fin_tableau != -1:
+            coupe = fin_tableau + len("</table>")
+        else:
+            premier = PREMIER_ELEMENT.match(corps)
+            coupe = premier.end() if premier else 0
+        return f'<div class="bloc">{titre}{corps[:coupe]}</div>{corps[coupe:]}'
+    return SECTION.sub(envelopper, html)
+
+
 def main() -> None:
     corps = markdown.markdown(preparer_markdown(SOURCE.read_text(encoding="utf-8")),
                               extensions=["tables", "fenced_code", "sane_lists"])
+    corps = grouper_sections(corps)
     HTML.write_text(
         "<!doctype html>\n<html lang=\"fr\"><head><meta charset=\"utf-8\">"
         f"<title>Benchmark LLM — G03 Data</title><style>{CSS}</style></head>\n<body>\n{corps}\n</body></html>\n",

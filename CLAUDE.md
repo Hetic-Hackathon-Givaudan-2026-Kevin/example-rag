@@ -50,6 +50,6 @@ data-brique/
 ## État d'avancement
 - [x] Étape 1 : inventaire, échantillon v0, rapport qualité (validé le 10/11)
 - [~] Étape 2 : express Gate 1 fait le 10/11 (g03-data.zip intégré : data/processed, src/moteur_v1.py, api/main.py, scripts/premier_resultat.py → docs/premier_resultat.md). Reste : tests pytest, contrat_api.md, notebook, sample_v1 + comparaison v0/v1, mention licences, CRM 1 000 interactions.
-- [~] Étape 3 : adaptée au disque plein (C: 0,3 Go libre, RAM ~1-2 Go libre). Modèles : embeddings nomic-embed-text + all-minilm vs TF-IDF ; LLM qwen2.5:1.5b + qwen2.5:0.5b. Coéquipiers : bge-m3, qwen2.5:3b (`--pc pc2`). Testés : TF-IDF, nomic, qwen2.5:1.5b. En attente : all-minilm, qwen2.5:0.5b.
+- [x] Étape 3 (11/11) : 8 modèles mesurés via l'instance Ollama sur D: (mxbai-embed-large et llama3.2:3b en passage complémentaire). Retenus pour la V2 : recherche bge-m3 (100 % top 3) > all-minilm (80 %) > TF-IDF en repli ; extraction qwen2.5:3b + garde-fou en pré-remplissage confirmé par le junior (critère F1≥0,85 & <20 s non atteint). Livrable : benchmark/benchmark_llm.pdf.
 - [ ] Étape 4
 - [ ] Étape 5
