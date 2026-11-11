@@ -55,7 +55,8 @@ SEED = 42
 MAX_TOKENS = 400
 EMBED_DEFAUT = ["nomic-embed-text", "all-minilm", "bge-m3"]
 LLM_DEFAUT = ["qwen2.5:0.5b", "qwen2.5:1.5b", "qwen2.5:3b"]
-MODELES_COEQUIPIERS = {"embed": ["bge-m3"], "llm": ["qwen2.5:3b"]}
+# Modèles prévus mais pas encore testés : à mesurer sur le PC d'un coéquipier.
+MODELES_COEQUIPIERS = {"embed": ["mxbai-embed-large"], "llm": ["llama3.2:3b"]}
 
 # Préfixes demandés par certains modèles d'embeddings (documentation des modèles).
 PREFIXES = {"nomic-embed-text": ("search_query: ", "search_document: ")}
@@ -317,24 +318,41 @@ def rapport() -> None:
     L = ["# Tableaux du benchmark (générés par `run_benchmark.py --rapport`)\n"]
     L.append("## Configuration des PC\n")
     L.append(pd.DataFrame({pc: r["config"] for pc, r in runs.items()}).to_markdown() + "\n")
+    pct = lambda x: f"{100 * x:.0f} %" if isinstance(x, (int, float)) else x  # noqa: E731
     rech, ext = [], []
     for pc, r in runs.items():
         for res in r["resultats"].values():
-            ligne = {"pc": pc, **{k: v for k, v in res.items() if k not in ("details", "type")}}
-            (rech if res["type"] == "recherche" else ext).append(ligne)
-        for m in r.get("non_installes", []):
-            pass
-    vus = {x["modele"] for x in rech + ext}
+            if res["type"] == "recherche":
+                rech.append({"modèle": res["modele"], "testé sur": pc,
+                             "rubrique rang 1": pct(res["rubrique_rang1"]),
+                             "question rang 1": pct(res["question_rang1"]),
+                             "question top 3": pct(res.get("question_top3", "")),
+                             "question top 5": pct(res["question_top5"]), "MRR": res["mrr"],
+                             "temps / requête (ms)": res["temps_moyen_ms"],
+                             "indexation banque (s)": res.get("indexation_banque_s", "")})
+            else:
+                ext.append({"modèle": res["modele"], "testé sur": pc,
+                            "JSON valide": pct(res["json_valide"]), "F1 brut": res["f1"],
+                            "F1 garde-fou": res.get("f1_garde_fou", ""),
+                            "notes exactes (garde-fou)": pct(res.get("cas_exacts_garde_fou", "")),
+                            "notes avec rubrique inventée (brut)": pct(res["notes_avec_rubrique_inventee"]),
+                            "notes avec rubrique inventée (garde-fou)":
+                                pct(res.get("notes_avec_rubrique_inventee_garde_fou", "")),
+                            "temps / note moy. (s)": res["temps_moyen_s"],
+                            "temps / note max (s)": res["temps_max_s"]})
+    # Lignes « à remplir » uniquement pour les modèles que personne n'a encore testés.
+    vus = {x["modèle"] for x in rech + ext}
     for m in MODELES_COEQUIPIERS["embed"]:
         if m not in vus:
-            rech.append({"pc": "coéquipier", "modele": m, "rubrique_rang1": "à remplir"})
+            rech.append({"modèle": m, "testé sur": "à remplir (PC coéquipier)"})
     for m in MODELES_COEQUIPIERS["llm"]:
         if m not in vus:
-            ext.append({"pc": "coéquipier", "modele": m, "json_valide": "à remplir"})
+            ext.append({"modèle": m, "testé sur": "à remplir (PC coéquipier)"})
     L.append("## Recherche de la bonne question (15 cas)\n")
     L.append(pd.DataFrame(rech).fillna("").to_markdown(index=False) + "\n")
     L.append("## Extraction JSON des rubriques connues (15 notes)\n")
     L.append(pd.DataFrame(ext).fillna("").to_markdown(index=False) + "\n")
+    L.append("Détail cas par cas (sorties brutes des modèles) : `benchmark/runs/<pc>.json`.\n")
     (ICI / "tableaux.md").write_text("\n".join(L), encoding="utf-8")
     print(f"-> {ICI / 'tableaux.md'}")
 
