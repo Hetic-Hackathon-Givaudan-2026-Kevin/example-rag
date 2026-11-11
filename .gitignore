@@ -20,3 +20,6 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Réglages personnels Claude Code (propres à chaque membre)
+CLAUDE.local.md

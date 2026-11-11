@@ -26,8 +26,14 @@
 - **Traçabilité** : chaque jeu de données a un fichier `.meta.json` (source, URL, date, licence, filtres, volume).
 - **Reproductibilité** : scripts relançables, versions figées dans `requirements.txt`, révision des exports figée si possible (ex. hash de commit Hugging Face).
 - **Secrets** : aucun token ni clé dans le dépôt (`.env` + `.gitignore`). Ne jamais écrire le token ngrok.
-- **Git** : branche `feature/data-brique`. Ne jamais pousser sur `develop` ou `main`. Pas de PR sans accord. Avant chaque commit, montrer le résultat (diff/fichiers) et attendre l'accord.
-- **Style** : tutoyer, répondre en français, explications simples (l'étudiant doit pouvoir justifier chaque choix devant le jury).
+- **Git** : ne jamais pousser sur `develop` ou `main`. Pas de PR sans accord. Avant chaque commit, montrer le résultat (diff/fichiers) et attendre l'accord. Ne jamais fusionner soi-même ni réécrire l'historique d'une branche distante.
+- **Dépôt de référence = example-rag** (`Hetic-Hackathon-Givaudan-2026-Kevin/example-rag`, remote `origin`). Règle de travail :
+  1. chaque nouvelle tâche part d'un `main` à jour : `git switch main` puis `git pull` ;
+  2. nouvelle branche `feature/<tache>` pour cette tâche (`git switch -c feature/<tache>`) ;
+  3. une PR par tâche vers `main`, relue par un coéquipier avant fusion ;
+  4. on ne réutilise jamais une branche déjà fusionnée : nouvelle tâche = nouvelle branche.
+- **Langue** : documents, commentaires et messages de commit en français.
+- **Réglages personnels** : chaque membre peut avoir un `CLAUDE.local.md` à la racine (son PC, ses préférences). Il est lu par Claude Code en plus de ce fichier, mais il est ignoré par git : ne jamais le commiter.
 - **Ollama** : appeler `http://127.0.0.1:11434` (pas `localhost`, lent sous Windows), `temperature 0`, vecteurs en cache.
 - **Validation** : ne jamais régler les prompts sur les cas de validation ; cas de test écrits AVANT de régler les prompts.
 
