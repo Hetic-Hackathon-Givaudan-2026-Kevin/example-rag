@@ -50,8 +50,11 @@ OLLAMA = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434").replace("localh
 CACHE = ICI / "cache"
 RUNS = ICI / "runs"
 SEED = 42
-EMBED_DEFAUT = ["nomic-embed-text", "all-minilm"]
-LLM_DEFAUT = ["qwen2.5:1.5b", "qwen2.5:0.5b"]
+# Plafond de tokens par réponse : évite qu'un petit modèle boucle sans fin (vu avec qwen2.5:0.5b en mode JSON).
+# Une réponse coupée n'est pas un JSON valide -> comptée comme échec.
+MAX_TOKENS = 400
+EMBED_DEFAUT = ["nomic-embed-text", "all-minilm", "bge-m3"]
+LLM_DEFAUT = ["qwen2.5:0.5b", "qwen2.5:1.5b", "qwen2.5:3b"]
 MODELES_COEQUIPIERS = {"embed": ["bge-m3"], "llm": ["qwen2.5:3b"]}
 
 # Préfixes demandés par certains modèles d'embeddings (documentation des modèles).
@@ -207,12 +210,12 @@ def appeler_llm(modele: str, note: str) -> tuple[str, float, dict]:
     rubriques = "\n".join(f"- {k} : {v}" for k, v in RUBRIQUES.items())
     corps = {
         "model": modele, "stream": False, "format": "json",
-        "options": {"temperature": 0, "seed": SEED, "num_ctx": 2048},
+        "options": {"temperature": 0, "seed": SEED, "num_ctx": 2048, "num_predict": MAX_TOKENS},
         "messages": [{"role": "system", "content": PROMPT_EXTRACTION.format(rubriques=rubriques)},
                      {"role": "user", "content": f"Note du rendez-vous :\n{note}"}],
     }
     t0 = time.perf_counter()
-    r = requests.post(f"{OLLAMA}/api/chat", json=corps, timeout=600)
+    r = requests.post(f"{OLLAMA}/api/chat", json=corps, timeout=300)
     duree = time.perf_counter() - t0
     r.raise_for_status()
     j = r.json()
@@ -258,7 +261,10 @@ def evaluer_extraction(modele: str, cas: pd.DataFrame) -> dict:
     lignes = []
     for _, c in cas.iterrows():
         attendu = set(filter(None, str(c["rubriques_remplies_attendues"] or "").split(";"))) - {"nan"}
-        brut, duree, meta = appeler_llm(modele, c["note_rdv"])
+        try:
+            brut, duree, meta = appeler_llm(modele, c["note_rdv"])
+        except requests.RequestException as e:  # délai dépassé, etc. -> échec de ce cas, on continue
+            brut, duree, meta = f"ERREUR: {type(e).__name__}", 300.0, {}
         try:
             j = json.loads(brut)
             predit_brut = j.get("rubriques_remplies", [])
@@ -334,6 +340,11 @@ def rapport() -> None:
 
 
 # ---------------------------------------------------------------- main
+def sauver(fichier: Path, run: dict) -> None:
+    """Sauvegarde après chaque modèle : un plantage ne fait pas perdre les résultats déjà obtenus."""
+    fichier.write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--pc", default="pc_principal", help="étiquette du PC (sans nom de personne)")
@@ -371,6 +382,7 @@ def main() -> None:
         ancien = run["resultats"].get(m, {}).get("indexation_banque_s")
         res["indexation_banque_s"] = round(duree_index, 2) if duree_index or ancien is None else ancien
         run["resultats"][m] = res
+        sauver(fichier, run)
         print(m, {k: v for k, v in res.items() if k != "details"})
 
     for m in a.llm:
@@ -380,9 +392,10 @@ def main() -> None:
             continue
         res = evaluer_extraction(m, cas)
         run["resultats"][m] = res
+        sauver(fichier, run)
         print(m, {k: v for k, v in res.items() if k != "details"})
 
-    fichier.write_text(json.dumps(run, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    sauver(fichier, run)
     print(f"-> {fichier}")
     rapport()
 
