@@ -2659,6 +2659,772 @@
      "brut": "{\n  \"rubriques_remplies\": [\"type_produit\", \"cible\", \"univers_olfactif\", \"marche\", \"contraintes\", \"budget_volume\", \"delai\", \"references\"],\n  \"valeurs\": {\n    \"type_produit\": [\"lait corps hydratant\"],\n    \"cible\": [\"adolescents\"],\n    \"univers_olfactif\": [\"non renseigné\"],\n    \"marche\": [\"France\", \"parfumerie sélective\"],\n    \"contraintes\": [\"non renseigné\"],\n    \"budget_volume\": [\"120 euros le kilo\", \"2 tonnes par an\"],\n    \"delai\": [\"non renseigné\"],\n    \"references\": [\"non renseigné\"]\n  }\n}"
     }
    ]
+  },
+  "mxbai-embed-large": {
+   "modele": "mxbai-embed-large",
+   "type": "recherche",
+   "rubrique_rang1": 0.533,
+   "question_rang1": 0.4,
+   "question_top3": 0.6,
+   "question_top5": 0.8,
+   "mrr": 0.558,
+   "temps_moyen_ms": 222.6,
+   "details": [
+    {
+     "id_cas": "T01",
+     "top1": "Q08",
+     "top5": "Q08|Q09|Q07|Q04|Q17",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": true,
+     "rang": 5
+    },
+    {
+     "id_cas": "T02",
+     "top1": "Q22",
+     "top5": "Q22|Q24|Q09|Q20|Q23",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": true,
+     "rang": 4
+    },
+    {
+     "id_cas": "T03",
+     "top1": "Q02",
+     "top5": "Q02|Q04|Q03|Q19|Q07",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    },
+    {
+     "id_cas": "T04",
+     "top1": "Q22",
+     "top5": "Q22|Q04|Q07|Q12|Q08",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 3
+    },
+    {
+     "id_cas": "T05",
+     "top1": "Q12",
+     "top5": "Q12|Q10|Q21|Q20|Q11",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": false,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 2
+    },
+    {
+     "id_cas": "T06",
+     "top1": "Q23",
+     "top5": "Q23|Q22|Q24|Q03|Q19",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    },
+    {
+     "id_cas": "T07",
+     "top1": "Q19",
+     "top5": "Q19|Q04|Q21|Q13|Q20",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": true,
+     "rang": 4
+    },
+    {
+     "id_cas": "T08",
+     "top1": "Q04",
+     "top5": "Q04|Q07|Q08|Q05|Q03",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    },
+    {
+     "id_cas": "T09",
+     "top1": "Q17",
+     "top5": "Q17|Q04|Q06|Q07|Q05",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": false,
+     "rang": 15
+    },
+    {
+     "id_cas": "T10",
+     "top1": "Q12",
+     "top5": "Q12|Q05|Q10|Q04|Q20",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": false,
+     "rang": 8
+    },
+    {
+     "id_cas": "T11",
+     "top1": "Q17",
+     "top5": "Q17|Q18|Q05|Q04|Q16",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    },
+    {
+     "id_cas": "T12",
+     "top1": "Q04",
+     "top5": "Q04|Q05|Q08|Q07|Q06",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": false,
+     "question_top5_ok": false,
+     "rang": 7
+    },
+    {
+     "id_cas": "T13",
+     "top1": "Q08",
+     "top5": "Q08|Q02|Q01|Q04|Q11",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    },
+    {
+     "id_cas": "T14",
+     "top1": "Q12",
+     "top5": "Q12|Q05|Q04|Q10|Q21",
+     "rubrique_rang1_ok": false,
+     "question_rang1_ok": false,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 2
+    },
+    {
+     "id_cas": "T15",
+     "top1": "Q14",
+     "top5": "Q14|Q13|Q15|Q19|Q12",
+     "rubrique_rang1_ok": true,
+     "question_rang1_ok": true,
+     "question_top3_ok": true,
+     "question_top5_ok": true,
+     "rang": 1
+    }
+   ],
+   "indexation_banque_s": 11.76
+  },
+  "llama3.2:3b": {
+   "modele": "llama3.2:3b",
+   "type": "extraction",
+   "json_valide": 1.0,
+   "precision": 0.53,
+   "rappel": 0.759,
+   "f1": 0.624,
+   "cas_exacts": 0.067,
+   "notes_avec_rubrique_inventee": 0.867,
+   "notes_avec_valeur_inventee": 0.667,
+   "f1_garde_fou": 0.818,
+   "precision_garde_fou": 0.844,
+   "rappel_garde_fou": 0.792,
+   "cas_exacts_garde_fou": 0.2,
+   "notes_avec_rubrique_inventee_garde_fou": 0.4,
+   "temps_moyen_s": 17.02,
+   "temps_max_s": 27.55,
+   "tokens_par_s": 6.2,
+   "chargement_s": 83.5,
+   "details": [
+    {
+     "id_cas": "T01",
+     "json_valide": true,
+     "attendu": [
+      "cible",
+      "marche",
+      "type_produit"
+     ],
+     "predit": [
+      "cible",
+      "contraintes",
+      "marche",
+      "references",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit_garde_fou": [
+      "cible",
+      "marche",
+      "type_produit"
+     ],
+     "precision": 0.5,
+     "rappel": 1.0,
+     "precision_gf": 1.0,
+     "rappel_gf": 1.0,
+     "exact_gf": true,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "contraintes",
+      "references",
+      "univers_olfactif"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "univers_olfactif",
+      "contraintes",
+      "references"
+     ],
+     "temps_s": 27.55,
+     "tokens_par_s": 4.4,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"cible\", \"univers_olfactif\", \"marche\", \"contraintes\", \"references\"], \"valeurs\": {\"type_produit\": \"gel douche surgras\", \"cible\": \"adolescents\", \"univers_olfactif\": \"jeunesse, énergie, fraîcheur\", \"marche\": \"Europe de l'Ouest\", \"contraintes\": \"aucune information\", \"references\": \"aucune information\"}}"
+    },
+    {
+     "id_cas": "T02",
+     "json_valide": true,
+     "attendu": [
+      "contraintes",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit": [
+      "budget_volume",
+      "contraintes",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "contraintes",
+      "marche",
+      "type_produit"
+     ],
+     "precision": 0.4,
+     "rappel": 0.6666666666666666,
+     "precision_gf": 0.6666666666666666,
+     "rappel_gf": 0.6666666666666666,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "delai",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "budget_volume",
+      "delai"
+     ],
+     "temps_s": 13.64,
+     "tokens_par_s": 6.8,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"contraintes\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"apres-shampoing\", \"marche\": \"Brumelle\", \"contraintes\": \"vegan\", \"budget_volume\": \"non spécifié\", \"delai\": \"non spécifié\"}}"
+    },
+    {
+     "id_cas": "T03",
+     "json_valide": true,
+     "attendu": [
+      "delai"
+     ],
+     "predit": [
+      "delai",
+      "marche"
+     ],
+     "predit_garde_fou": [
+      "delai",
+      "marche"
+     ],
+     "precision": 0.5,
+     "rappel": 1.0,
+     "precision_gf": 0.5,
+     "rappel_gf": 1.0,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [],
+     "temps_s": 7.5,
+     "tokens_par_s": 7.2,
+     "brut": "{\"rubriques_remplies\": [\"marche\", \"delai\"], \"valeurs\": {\"marche\": \"septembre 2027\", \"delai\": \"trois tours de validation\"}}"
+    },
+    {
+     "id_cas": "T04",
+     "json_valide": true,
+     "attendu": [
+      "budget_volume",
+      "cible",
+      "marche",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "contraintes",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "budget_volume",
+      "marche",
+      "type_produit"
+     ],
+     "precision": 0.75,
+     "rappel": 0.75,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.75,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "contraintes"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [],
+     "temps_s": 13.13,
+     "tokens_par_s": 6.9,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"budget_volume\", \"contraintes\"], \"valeurs\": {\"type_produit\": \"savon solide\", \"marche\": \"Belgique, pharmacie\", \"budget_volume\": \"environ 60 euros le kilo pour 10 tonnes par an\", \"contraintes\": \"\"}}"
+    },
+    {
+     "id_cas": "T05",
+     "json_valide": true,
+     "attendu": [
+      "references",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit": [
+      "budget_volume",
+      "marche",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit_garde_fou": [
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "precision": 0.5,
+     "rappel": 0.6666666666666666,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.6666666666666666,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "marche",
+      "budget_volume"
+     ],
+     "temps_s": 15.17,
+     "tokens_par_s": 6.5,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"univers_olfactif\", \"marche\", \"budget_volume\"], \"valeurs\": {\"type_produit\": \"parfum\", \"univers_olfactif\": \"chaleureux, ambr\\u00e9\", \"marche\": \"pays de consommation\", \"budget_volume\": \"pas de d\\u00e9tail\"}}"
+    },
+    {
+     "id_cas": "T06",
+     "json_valide": true,
+     "attendu": [
+      "cible",
+      "contraintes",
+      "delai",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "precision": 0.5,
+     "rappel": 0.5,
+     "precision_gf": 0.5,
+     "rappel_gf": 0.5,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [],
+     "temps_s": 12.11,
+     "tokens_par_s": 7.1,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"parfum pour enfants\", \"marche\": \"sortie urgente\", \"budget_volume\": \"un seul tour de validation possible\", \"delai\": \"un seul tour de validation possible\"}}"
+    },
+    {
+     "id_cas": "T07",
+     "json_valide": true,
+     "attendu": [
+      "cible",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "cible",
+      "contraintes",
+      "delai",
+      "marche",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit_garde_fou": [
+      "cible",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "precision": 0.2857142857142857,
+     "rappel": 1.0,
+     "precision_gf": 0.6666666666666666,
+     "rappel_gf": 1.0,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "contraintes",
+      "delai",
+      "marche",
+      "univers_olfactif"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "marche",
+      "contraintes",
+      "budget_volume",
+      "delai"
+     ],
+     "temps_s": 25.63,
+     "tokens_par_s": 6.6,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"cible\", \"univers_olfactif\", \"marche\", \"contraintes\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"crème pour le corps\", \"cible\": \"femmes de 25 à 40 ans, urbaines et sensibles au naturel\", \"univers_olfactif\": \"naturel\", \"marche\": \"pas de marché et de pays précisés\", \"contraintes\": \"pas de contraintes précisées\", \"budget_volume\": \"pas de budget et de volume précisés\", \"delai\": \"pas de délai et d'étapes de validation précisées\"}}"
+    },
+    {
+     "id_cas": "T08",
+     "json_valide": true,
+     "attendu": [
+      "marche",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "marche",
+      "type_produit"
+     ],
+     "precision": 0.5,
+     "rappel": 0.6666666666666666,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.6666666666666666,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "delai"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "budget_volume",
+      "delai"
+     ],
+     "temps_s": 11.39,
+     "tokens_par_s": 7.1,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"d\\u00e9odorant\", \"marche\": \"Maroc, grande surface\", \"budget_volume\": \"pas de valeur\", \"delai\": \"pas de valeur\"}}"
+    },
+    {
+     "id_cas": "T09",
+     "json_valide": true,
+     "attendu": [
+      "budget_volume",
+      "contraintes",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "contraintes",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "budget_volume",
+      "contraintes",
+      "type_produit"
+     ],
+     "precision": 1.0,
+     "rappel": 1.0,
+     "precision_gf": 1.0,
+     "rappel_gf": 1.0,
+     "exact_gf": true,
+     "inventee_gf": false,
+     "exact": true,
+     "rubriques_inventees": [],
+     "codes_inconnus": [],
+     "valeurs_inventees": [],
+     "temps_s": 13.35,
+     "tokens_par_s": 6.2,
+     "brut": "{\"rubriques_remplies\": [\"budget_volume\", \"contraintes\", \"type_produit\"], \"valeurs\": {\"budget_volume\": \"environ 8 euros le kilo, 500 tonnes par an\", \"contraintes\": \"ingrédients interdits\", \"type_produit\": \"savon liquide pour les mains\"}}"
+    },
+    {
+     "id_cas": "T10",
+     "json_valide": true,
+     "attendu": [
+      "cible",
+      "references",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "cible",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "cible",
+      "type_produit"
+     ],
+     "precision": 0.4,
+     "rappel": 0.6666666666666666,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.6666666666666666,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "delai",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "marche",
+      "budget_volume",
+      "delai"
+     ],
+     "temps_s": 19.65,
+     "tokens_par_s": 5.6,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"cible\", \"marche\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"lessive\", \"cible\": \"familles\", \"marche\": \"march\\u00e9 de m\\u00e1uvres et d\\u2019appartements\", \"budget_volume\": \"mod\\u00e9r\\u00e9\", \"delai\": \"2 mois\"}}"
+    },
+    {
+     "id_cas": "T11",
+     "json_valide": true,
+     "attendu": [
+      "delai",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "delai",
+      "type_produit"
+     ],
+     "precision": 0.5,
+     "rappel": 0.6666666666666666,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.6666666666666666,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "marche",
+      "budget_volume"
+     ],
+     "temps_s": 13.75,
+     "tokens_par_s": 6.1,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"spray d'ambiance\", \"marche\": \"Canada\", \"budget_volume\": \"modeste\", \"delai\": \"validation par comité marketing avant fin 2027\"}}"
+    },
+    {
+     "id_cas": "T12",
+     "json_valide": true,
+     "attendu": [],
+     "predit": [
+      "budget_volume",
+      "cible",
+      "contraintes",
+      "delai",
+      "marche"
+     ],
+     "predit_garde_fou": [],
+     "precision": 0.0,
+     "rappel": 0.0,
+     "precision_gf": 1.0,
+     "rappel_gf": 1.0,
+     "exact_gf": true,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "cible",
+      "contraintes",
+      "delai",
+      "marche"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "cible",
+      "marche",
+      "contraintes",
+      "budget_volume",
+      "delai"
+     ],
+     "temps_s": 16.31,
+     "tokens_par_s": 7.1,
+     "brut": "{\"rubriques_remplies\": [\"cible\", \"marche\", \"contraintes\", \"budget_volume\", \"delai\"], \"valeurs\": {\"cible\": \"Une personne intéressée par les parfums de luxe\", \"marche\": \"Marché des produits de luxe, peut-être en ligne ou dans des magasins de luxe\", \"contraintes\": \"Aucune information\", \"budget_volume\": \"Aucune information\", \"delai\": \"Aucune information\"}}"
+    },
+    {
+     "id_cas": "T13",
+     "json_valide": true,
+     "attendu": [
+      "cible",
+      "contraintes",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "cible",
+      "contraintes",
+      "delai",
+      "marche",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit_garde_fou": [
+      "cible",
+      "contraintes",
+      "delai",
+      "marche",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "precision": 0.7142857142857143,
+     "rappel": 1.0,
+     "precision_gf": 0.8333333333333334,
+     "rappel_gf": 1.0,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "budget_volume",
+      "univers_olfactif"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "budget_volume"
+     ],
+     "temps_s": 19.45,
+     "tokens_par_s": 7.0,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"cible\", \"univers_olfactif\", \"marche\", \"contraintes\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"shampoing\", \"cible\": \"seniors\", \"univers_olfactif\": \"peau sensible\", \"marche\": \"Europe de l'Ouest\", \"contraintes\": \"biod\\u00e9gradables\", \"budget_volume\": \"inconnu\", \"delai\": \"septembre 2027\"}}"
+    },
+    {
+     "id_cas": "T14",
+     "json_valide": true,
+     "attendu": [
+      "references",
+      "type_produit"
+     ],
+     "predit": [
+      "contraintes",
+      "marche",
+      "references",
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "predit_garde_fou": [
+      "type_produit",
+      "univers_olfactif"
+     ],
+     "precision": 0.4,
+     "rappel": 1.0,
+     "precision_gf": 0.5,
+     "rappel_gf": 0.5,
+     "exact_gf": false,
+     "inventee_gf": true,
+     "exact": false,
+     "rubriques_inventees": [
+      "contraintes",
+      "marche",
+      "univers_olfactif"
+     ],
+     "codes_inconnus": [],
+     "valeurs_inventees": [
+      "marche",
+      "contraintes",
+      "references"
+     ],
+     "temps_s": 27.41,
+     "tokens_par_s": 4.2,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"univers_olfactif\", \"marche\", \"contraintes\", \"references\"], \"valeurs\": {\"type_produit\": \"bougie parfum\\u00e9e\", \"univers_olfactif\": \"Verdeau\", \"marche\": \"pas de d\\u00e9tails\", \"contraintes\": \"pas de d\\u00e9tails\", \"references\": \"Dunham et Jo Malone\"}}"
+    },
+    {
+     "id_cas": "T15",
+     "json_valide": true,
+     "attendu": [
+      "budget_volume",
+      "cible",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "predit_garde_fou": [
+      "budget_volume",
+      "delai",
+      "marche",
+      "type_produit"
+     ],
+     "precision": 1.0,
+     "rappel": 0.8,
+     "precision_gf": 1.0,
+     "rappel_gf": 0.8,
+     "exact_gf": false,
+     "inventee_gf": false,
+     "exact": false,
+     "rubriques_inventees": [],
+     "codes_inconnus": [],
+     "valeurs_inventees": [],
+     "temps_s": 19.33,
+     "tokens_par_s": 4.8,
+     "brut": "{\"rubriques_remplies\": [\"type_produit\", \"marche\", \"budget_volume\", \"delai\"], \"valeurs\": {\"type_produit\": \"lait corps hydratant\", \"marche\": \"France, parfumerie sélective\", \"budget_volume\": \"120 euros, 2 tonnes par an\", \"delai\": \"fin 2027\"}}"
+    }
+   ]
   }
  },
  "config": {
@@ -2673,5 +3439,25 @@
   "python": "3.11.9",
   "date": "2026-11-11T13:07:54"
  },
- "non_installes": []
+ "non_installes": [],
+ "passage_complementaire": {
+  "date": "2026-11-11T19:22:41",
+  "modeles": [
+   "mxbai-embed-large",
+   "llama3.2:3b"
+  ],
+  "note": "Ces deux modèles viennent d'un passage complémentaire du 11/11/2026, sur la même machine et avec les mêmes réglages (15 cas, temperature 0, graine 42, 400 tokens max, même garde-fou). Les temps de réponse peuvent légèrement varier d'une session à l'autre.",
+  "config": {
+   "os": "Windows 10",
+   "cpu": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+   "coeurs_logiques": 12,
+   "ram_totale_go": 15.3,
+   "ram_libre_go": 2.2,
+   "disque_systeme_libre_go": 0.1,
+   "disque_systeme_total_go": 237.4,
+   "ollama": "0.40.16",
+   "python": "3.11.9",
+   "date": "2026-11-11T19:22:41"
+  }
+ }
 }

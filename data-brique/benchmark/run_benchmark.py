@@ -59,7 +59,8 @@ LLM_DEFAUT = ["qwen2.5:0.5b", "qwen2.5:1.5b", "qwen2.5:3b"]
 MODELES_COEQUIPIERS = {"embed": ["mxbai-embed-large"], "llm": ["llama3.2:3b"]}
 
 # Préfixes demandés par certains modèles d'embeddings (documentation des modèles).
-PREFIXES = {"nomic-embed-text": ("search_query: ", "search_document: ")}
+PREFIXES = {"nomic-embed-text": ("search_query: ", "search_document: "),
+            "mxbai-embed-large": ("Represent this sentence for searching relevant passages: ", "")}
 
 STOPWORDS = set("""a au aux avec ce ces c cela d dans de des du elle en est et eux il ils je j l la le les leur leurs
 lui ma mais me meme mes moi mon ne nos notre nous on ou par pas pour qu que qui sa se ses son sur ta te tes toi ton

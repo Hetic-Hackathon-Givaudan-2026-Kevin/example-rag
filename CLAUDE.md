@@ -29,8 +29,6 @@
 - **Git** : branche `feature/data-brique`. Ne jamais pousser sur `develop` ou `main`. Pas de PR sans accord. Avant chaque commit, montrer le résultat (diff/fichiers) et attendre l'accord.
 - **Style** : tutoyer, répondre en français, explications simples (l'étudiant doit pouvoir justifier chaque choix devant le jury).
 - **Ollama** : appeler `http://127.0.0.1:11434` (pas `localhost`, lent sous Windows), `temperature 0`, vecteurs en cache.
-- **Disque C: presque plein** : les modèles du benchmark sont sur D: via une 2e instance Ollama (ne touche pas l'instance habituelle) :
-  `$env:OLLAMA_MODELS='D:\ollama\models'; $env:OLLAMA_HOST='127.0.0.1:11435'; ollama serve`, puis lancer le benchmark avec `OLLAMA_HOST=http://127.0.0.1:11435`.
 - **Validation** : ne jamais régler les prompts sur les cas de validation ; cas de test écrits AVANT de régler les prompts.
 
 ## Arborescence
@@ -52,6 +50,6 @@ data-brique/
 ## État d'avancement
 - [x] Étape 1 : inventaire, échantillon v0, rapport qualité (validé le 10/11)
 - [~] Étape 2 : express Gate 1 fait le 10/11 (g03-data.zip intégré : data/processed, src/moteur_v1.py, api/main.py, scripts/premier_resultat.py → docs/premier_resultat.md). Reste : tests pytest, contrat_api.md, notebook, sample_v1 + comparaison v0/v1, mention licences, CRM 1 000 interactions.
-- [x] Étape 3 (11/11) : 6 modèles mesurés via l'instance Ollama sur D:. Retenus pour la V2 : recherche bge-m3 (100 % top 3) > all-minilm (80 %) > TF-IDF en repli ; extraction qwen2.5:3b + garde-fou en pré-remplissage confirmé par le junior (critère F1≥0,85 & <20 s non atteint). Livrable : benchmark/benchmark_llm.pdf.
+- [x] Étape 3 (11/11) : 8 modèles mesurés via l'instance Ollama sur D: (mxbai-embed-large et llama3.2:3b en passage complémentaire). Retenus pour la V2 : recherche bge-m3 (100 % top 3) > all-minilm (80 %) > TF-IDF en repli ; extraction qwen2.5:3b + garde-fou en pré-remplissage confirmé par le junior (critère F1≥0,85 & <20 s non atteint). Livrable : benchmark/benchmark_llm.pdf.
 - [ ] Étape 4
 - [ ] Étape 5
