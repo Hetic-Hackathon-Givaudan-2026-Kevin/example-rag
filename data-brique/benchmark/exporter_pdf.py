@@ -41,6 +41,8 @@ pre { background: #f2f4f6; border: 1px solid #d0d7de; padding: 8px; font-size: 8
       white-space: pre-wrap; break-inside: avoid; }
 pre code { background: none; padding: 0; }
 em { color: #57606a; }
+blockquote { border-left: 4px solid #bf8700; background: #fff8e5; margin: 8px 0; padding: 6px 12px; }
+blockquote p { margin: 0; }
 li { margin: 2px 0; }
 a { color: #0b5cad; text-decoration: none; }
 """
